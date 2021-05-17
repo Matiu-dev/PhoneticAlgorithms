@@ -143,9 +143,6 @@ public class SecondaryController {
                 bad_file_text_result.setText(bad_file_text_result.getText() + phoneticAlgorithms.encodeNysiis(s) + " ");
             }
         }
-
-
-
     }
 
     @FXML
@@ -167,11 +164,9 @@ public class SecondaryController {
                     precisionNumerator++;
                     recallNumerator++;
                 }
-                recallDenominator++;
 
-                if(precisionNumerator>0){
-                    precisionDenominator=1;
-                }
+                recallDenominator++;
+                precisionDenominator++;
 
                 if(precisionNumerator!=0 && precisionDenominator!=0){
                     precision.add((double)precisionNumerator/(double)precisionDenominator);
@@ -203,7 +198,7 @@ public class SecondaryController {
                     }
                 }
 
-                recallDenominator = listBad.size();
+                recallDenominator = listBad.size() + listGood.size() - recallNumerator;
                 precisionDenominator=listBad.size();
 
                 System.out.println("Precision " + (double)precisionNumerator + " / " + (double)precisionDenominator);
@@ -251,7 +246,7 @@ public class SecondaryController {
             seriesRecall.getData().add(new XYChart.Data(i, recall.get(i)));
         }
 
-        recall_precision_line_chart.getData().add(seriesPrecision);
+        recall_precision_line_chart.getData().addAll(seriesPrecision, seriesRecall);
     }
 
     @FXML
@@ -288,4 +283,4 @@ public class SecondaryController {
 //stosunek liczby dobrych kodow dla slowa do calkowitej liczby kodow dla tego slowa
 
 //recall
-//suma wszystkich poprawnych kodow dla slowa do sumy wszystkich blednych kodow dla slowa
+//suma wszystkich poprawnych kodow dla slowa do sumy wszystkich  kodow dla obu slowa
